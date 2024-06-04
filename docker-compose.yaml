@@ -1,15 +1,27 @@
-version: '3'
+version: '3.8'  # Atualize para a versão 3.8 para melhor compatibilidade
 services:
   servicea:
     build:
       context: ./serviceA
     ports:
       - "8080:8080"
+    environment:
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
   serviceb:
     build:
       context: ./serviceB
     ports:
       - "8081:8081"
+    environment:
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
+  otel-collector:
+    image: otel/opentelemetry-collector:0.45.0
+    ports:
+      - "4317:4317"
+      - "55680:55680"
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otel/config.yaml
+    command: ["--config", "/etc/otel/config.yaml"]
   zipkin:
     image: openzipkin/zipkin
     ports:

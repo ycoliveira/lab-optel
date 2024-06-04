@@ -8,8 +8,8 @@ RUN go mod download
 
 COPY *.go ./
 
-RUN go build -o /serviceA
+RUN go build -o /serviceB
 
-EXPOSE 8080
+EXPOSE 8081
 
-CMD ["/serviceA"]
+CMD ["/serviceB"]

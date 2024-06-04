@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"io"
+	"log"
 	"net/http"
 	"net/url"
 	"regexp"
@@ -46,7 +47,7 @@ func main() {
 
 	r.Get("/weather", SearchCepHandler)
 
-	http.ListenAndServe(":8081", r)
+	log.Fatal(http.ListenAndServe(":8081", r))
 }
 
 func SearchCepHandler(w http.ResponseWriter, r *http.Request) {
